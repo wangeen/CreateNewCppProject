@@ -12,7 +12,7 @@ The following is a hierarchy tree for the project.
    |__________src  
    |__________interface  
    |__________main  
-   |           |___________main.cpp  
+   |\           |___________main.cpp  
    |  
    |__________build  
 
