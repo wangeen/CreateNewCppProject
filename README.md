@@ -4,6 +4,7 @@ CreateNewCppProject
 Python, CPP Project, CMake
 
 This is a script for create a new CPP project with CMake to manage it.
+
 The following is a hierarchy tree for the project.
 
 ProjectName
