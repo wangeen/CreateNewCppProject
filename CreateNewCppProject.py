@@ -60,10 +60,10 @@ add_executable(${projectName} ${MAIN_SRC_LIST} ${LIB_SRC_LIST})
 def createMainFile():
     content='''#include <iostream>
 using namespace std;
-
+#define BUILD_TIME  "2014-01-27 12:50:55.139596"
 
 int main(int ac,  char** av){
-    cout  << "Hello World!" << endl;
+    cout   <<  "Release Time:"  <<  BUILD_TIME  <<  endl;
     return 0;
 }
     '''
@@ -75,16 +75,27 @@ int main(int ac,  char** av){
 ################################################################################################
 def createRunPyFile():
     content = '''#! /usr/bin/env python
-import subprocess, os,  sys
-import argparse
+import subprocess, os,  sys, fileinput, datetime, argparse
 
 # sourceRoot = os.path.realpath(os.path.abspath(os.path.split(inspect.getfile( inspect.currentframe() ))[0]))
+
+def changeBuildTime():
+    fname = "./main/main.cpp"
+    match_string = "#define BUILD_TIME"
+    for line in fileinput.input(fname,   inplace=1):
+        if line.find(match_string) >= 0:
+            line = match_string+' "'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")+'"'
+            print line
+        else:
+            print line
+
 
 def script(cmd):
     print cmd
     subprocess.call(cmd,  shell = True)
 
 if __name__  == "__main__":
+    changeBuildTime()
     os.chdir("build")
     script("rm -rf *")
     script("cmake ..")
